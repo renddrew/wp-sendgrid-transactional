@@ -3,7 +3,7 @@ This a developer friendly helper plugin for interacting with the SendGrid V3 Mai
 
 ## Usage:
 
-- Enter your API key etc in the settings file
+- Enter your API key etc in the class-settings.php file
 
 - Tie the PHP function below to your functions to trigger your email templates.  
 
@@ -12,35 +12,37 @@ This a developer friendly helper plugin for interacting with the SendGrid V3 Mai
 
 ### Example: 
 
-Function you can dump into functions.php for testing
 
 ```
 
-// hook somewhere in wp
+// functions.php
+
+
+//Hook somewhere in wp
 add_action('wp_footer', 'send_sg_mail');
 
 function send_sg_mail(){
 
-	// check if we have asked to test to test - add ?send-test to a page url
-	if(isset($_GET['send-test'])){
+  	// check if we are set to test - add ?send-test to a page url
+	  if(isset($_GET['send-test'])){
 
         $to = 'youremail@example.com';
         $template_id = '9a9d3jj-fajk-447c-944c-b723432safbfwere52e';
 
         // Substitute tags - will have dashes automatically appended and prepended to sent params
         $subs = array(
-          'name' => '', 
-          'requester' => '',
-          'connect_url' => '',
-          'requester_email' => ''
-          );
+            'name' => '', 
+            'requester' => '',
+            'connect_url' => '',
+            'requester_email' => ''
+        );
 
         // check that the function exists - plugin active etc
         if(function_exists('thaSendGrid')){
-        	// trigger the email  - will return a 'success' or error messages
+        	  //trigger the email  - will return a 'success' or error messages
             echo thaSendGrid()->mailer->sendgrid_transactional_email($to, $template_id, $subs);
         }
-	}
+    }
 }
 
 
